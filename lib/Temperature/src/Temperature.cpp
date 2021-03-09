@@ -37,7 +37,7 @@ String Temperature::getData() {
     measurement["Address"] = address;
     measurement["Timestamp"] = millis() / float(1000);
     measurement["Temperature (\u2103)"] = temp_event.temperature;
-    measurement["Pressure (kPa)"] = pressure_event.pressure / float(1000);
+    measurement["Pressure (kPa)"] = pressure_event.pressure / float(10);
     measurement["Temperature Error"] = temp_err;
     measurement["Pressure Error"] = pres_err;
 
