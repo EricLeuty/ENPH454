@@ -7,6 +7,9 @@ Temperature::Temperature(const String& name_arg, uint8_t address_arg) : LabSenso
 }
 
 bool Temperature::begin() {
+    bool connected;
+    Serial.println("Connecting to device: " + name);
+    Serial.print("Connection status: ");
     if(bmp.begin(address)){
         bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
                 Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
@@ -14,10 +17,15 @@ bool Temperature::begin() {
                 Adafruit_BMP280::FILTER_X16,      /* Filtering. */
                 Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
         Serial.print(F("Connected"));
-        return true;
-        }
-    Serial.println(F("Failed to connected"));   
-    return false;
+        connected = true;;
+    }
+    else {
+        Serial.println(F("Failed to connected"));  
+        connected = false;
+    }
+    Serial.println();
+
+    return connected;
 }
 
 String Temperature::getData() {
@@ -27,10 +35,10 @@ String Temperature::getData() {
     DynamicJsonDocument measurement(100);
     measurement.clear();
     measurement["Address"] = address;
-    measurement["Timestamp"] = temp_event.timestamp;
-    measurement["Temperature"] = temp_event.temperature;
+    measurement["Timestamp"] = millis() / float(1000);
+    measurement["Temperature (\u2103)"] = temp_event.temperature;
+    measurement["Pressure (kPa)"] = pressure_event.pressure / float(1000);
     measurement["Temperature Error"] = temp_err;
-    measurement["Pressure"] = pressure_event.pressure;
     measurement["Pressure Error"] = pres_err;
 
     String data;

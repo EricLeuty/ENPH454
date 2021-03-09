@@ -10,7 +10,7 @@
 
 //temperature and pressure measurement resolution
 const float temp_err = 0.01;    
-const float pres_err = 0.16;    
+const float pres_err = 0.01;    //0.01 kPa
 
 
 //Temperature object provides an interface between BMP280 and main loop

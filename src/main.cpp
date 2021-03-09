@@ -10,7 +10,7 @@
 
 
 //interval between collecting data from the active sensors in milliseconds
-#define MEASUREMENT_INTERVAL 10000
+#define MEASUREMENT_INTERVAL 1000
 
 
 //arrays that sensor objects
@@ -24,6 +24,7 @@ int numConnected(0);
 void setup() {
   //initialize serial connection
   Serial.begin(9600);
+  Serial.println("Serial Connected");
   
 
   //add sensor objects to sensors array
@@ -36,7 +37,7 @@ void setup() {
   //names and addresses of each sensor 
   DynamicJsonDocument configInfo(100);
   configInfo.clear();
-  configInfo["Start Time"] = millis();
+  configInfo["Start Time"] = millis() / float(1000);
   JsonObject sensorsInfo = configInfo.createNestedObject("Sensors");
 
 
