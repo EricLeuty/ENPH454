@@ -10,7 +10,7 @@
 
 
 //interval between collecting data from the active sensors in milliseconds
-#define MEASUREMENT_INTERVAL 1000
+#define MEASUREMENT_INTERVAL 500
 
 
 //arrays that sensor objects
