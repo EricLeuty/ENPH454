@@ -10,8 +10,7 @@
 
 
 //interval between collecting data from the active sensors in milliseconds
-#define MEASUREMENT_INTERVAL 500
-
+#define MEASUREMENT_INTERVAL 1000
 
 //arrays that sensor objects
 typedef LabSensor* SensorPtr;
@@ -23,7 +22,7 @@ int numConnected(0);
 //initialize arduino
 void setup() {
   //initialize serial connection
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Serial Connected");
   
 
@@ -56,12 +55,14 @@ void setup() {
     }
     else {
       //delete inactive sensors
+      Serial.print("Deleted inactive sensor");
       delete sensors[i];
     }
   }
 
 
   //delete array that held unititialized sensors
+  Serial.println("Deleted sensor Array");
   delete[] sensors;
   Serial.println();
   
