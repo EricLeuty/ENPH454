@@ -37,7 +37,8 @@ void setup() {
   DynamicJsonDocument configInfo(100);
   configInfo.clear();
   configInfo["Start Time"] = millis() / float(1000);
-  JsonObject sensorsInfo = configInfo.createNestedObject("Sensors");
+  JsonVariant sensorsInfo = configInfo.createNestedObject("Sensors");
+  sensorsInfo.clear();
 
 
   //checks if sensor is connected
@@ -48,21 +49,22 @@ void setup() {
       activeSensors[numConnected] = sensors[i];
       numConnected++;
       //add sensor info to configInfo
+      
       String sensor_num = "Sensor " + String(i);
-      JsonObject sensorInfo = sensorsInfo.createNestedObject(sensor_num);
-      sensorInfo["Name"] = activeSensors[i]->getName();
-      sensorInfo["Address"] = activeSensors[i]->getAddress();
+      JsonVariant sensorInfo = sensorsInfo.createNestedObject(sensor_num);
+      Serial.println(configInfo.memoryUsage());
+      sensorInfo.clear();
+      sensorInfo["Name"] = sensors[i]->getName();
+      sensorInfo["Address"] = sensors[i]->getAddress();
     }
     else {
       //delete inactive sensors
-      Serial.print("Deleted inactive sensor");
       delete sensors[i];
     }
   }
 
 
   //delete array that held unititialized sensors
-  Serial.println("Deleted sensor Array");
   delete[] sensors;
   Serial.println();
   
